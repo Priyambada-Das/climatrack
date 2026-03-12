@@ -7,6 +7,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useReverseGeocodeQuery, useWeatherQuery, useForecastQuery } from '@/hooks/use-weather'
 import CurrentWeather from '@/components/Current-weather'
 import HourlyTemprature from '@/components/Hourly-temprature'
+import WeatherDetails from '@/components/Weather-details'
+import WeatherForecast from '@/components/weather-forecast'
 
 const WeatherDashboard = () => {
   const { coordinates, error: locationError, getLocation, isLoading: locationLoading } = useGeolocation();
@@ -14,7 +16,7 @@ const WeatherDashboard = () => {
   const weatherQuery = useWeatherQuery(coordinates)
   const forecastQuery = useForecastQuery(coordinates)
   const locationQuery = useReverseGeocodeQuery(coordinates)
-  console.log(locationQuery)
+  // console.log(locationQuery)
 
   const handleRefresh = () => {
     getLocation();
@@ -98,15 +100,21 @@ const WeatherDashboard = () => {
       </div>
 
       <div className='grid gap-6'>
-        <div>
+        <div className='flex flex-col lg:flex-row gap-4'>
           <CurrentWeather
             data={weatherQuery.data}
             locationName={locationName}
           />
           <HourlyTemprature data={forecastQuery.data} />
         </div>
-        <div>
 
+        <div className='grid gap-6 md:grid-cols-2 items-start'>
+          <WeatherDetails
+            data={weatherQuery.data}
+          />
+          <WeatherForecast
+            data={forecastQuery.data}
+          />
         </div>
       </div>
     </div>
