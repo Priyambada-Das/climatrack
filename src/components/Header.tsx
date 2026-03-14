@@ -2,6 +2,7 @@ import React from 'react'
 import { useTheme } from '@/context/theme-provider'
 import { Moon, Sun } from 'lucide-react';
 import { Link } from 'react-router-dom'
+import CitySearch from './City-search';
 
 const Header = () => {
   const { theme, setTheme } = useTheme();
@@ -15,8 +16,9 @@ const Header = () => {
           <img src={theme === "dark" ? "/logo.png" : "/logo2.png"} alt="Climatrack Logo" className='h-14' />
         </Link>
 
-        <div>
+        <div className='flex gap-4'>
           {/* search */}
+          <CitySearch />
           {/* theme toggle */}
           <div onClick={() => setTheme(isDark ? "light" : "dark")}
             className={`flex items-center cursor-pointer transition-transform duration-500 ${isDark ? "rotate-180" : "rotate-0"}`}>

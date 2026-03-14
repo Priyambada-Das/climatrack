@@ -18,7 +18,7 @@ class WeatherAPI {
         return response.json()
     }
 
-    async getCurrentWeather({ lat, lon }: Coordinates):Promise<WeatherData> {
+    async getCurrentWeather({ lat, lon }: Coordinates): Promise<WeatherData> {
         const url = this.createURL(`${API_CONFIG.BASE_URL}/weather`, {
             lat: lat.toString(),
             lon: lon.toString(),
@@ -27,7 +27,7 @@ class WeatherAPI {
         return this.fetchData<WeatherData>(url)
     }
 
-    async getForecast({ lat, lon }: Coordinates):Promise<forecastData> {
+    async getForecast({ lat, lon }: Coordinates): Promise<forecastData> {
         const url = this.createURL(`${API_CONFIG.BASE_URL}/forecast`, {
             lat: lat.toString(),
             lon: lon.toString(),
@@ -36,11 +36,19 @@ class WeatherAPI {
         return this.fetchData<forecastData>(url)
     }
 
-    async reverseGeocode({ lat, lon }: Coordinates):Promise<GeocodingResponse[]> {
+    async reverseGeocode({ lat, lon }: Coordinates): Promise<GeocodingResponse[]> {
         const url = this.createURL(`${API_CONFIG.GEO}/reverse`, {
             lat: lat.toString(),
             lon: lon.toString(),
             limit: 1
+        })
+        return this.fetchData<GeocodingResponse[]>(url)
+    }
+
+    async searchLocation(query: string): Promise<GeocodingResponse[]> {
+        const url = this.createURL(`${API_CONFIG.GEO}/direct`, {
+            q: query,
+            limit: 5
         })
         return this.fetchData<GeocodingResponse[]>(url)
     }
